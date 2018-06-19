@@ -21,8 +21,24 @@ body, a:link, a:visited, a:active{
   background-color: #777;
 }
 .dancer {
-  border:10px solid red;
+  width:100px;
+  height:100px;
   position:absolute;
+}
+
+.blinkyDancer {
+  border:0px;
+  content:url(giphy.gif);
+}
+
+.crazyDancer {
+  border:0px;
+  content:url(leftshark.gif);
+}
+
+.spinningDancer {
+  border:0px;
+  content:url(pbjtime.gif);
 }
 
 body {

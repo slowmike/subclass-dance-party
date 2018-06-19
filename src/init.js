@@ -14,8 +14,6 @@ $(document).ready(function() {
      * A new object of the given type will be created and added
      * to the stage.
      */
-    var xPos = 840 * Math.random();
-    var yPos = 1500 * Math.random();
 
     if($(this).data('dancer-maker-function-name') === "lineUp") {
       $('body').each(function(value) {
@@ -29,10 +27,13 @@ $(document).ready(function() {
     var dancerMakerFunction = window[dancerMakerFunctionName];
 
     // make a dancer with a random position
+    console.log(dancerMakerFunctionName);
+    if( dancerMakerFunctionName === 'makeBlinkyDancer'){
 
+    }
     var dancer = new dancerMakerFunction(
-      xPos ,
-      yPos ,
+      Math.floor(Math.random() * 800),
+      Math.floor(Math.random() * 1500),
       Math.random() * 1000
     );
     $('body').append(dancer.$node);
