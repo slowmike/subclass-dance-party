@@ -1,7 +1,11 @@
 $(document).ready(function() {
   window.dancers = [];
 
-  var linedUp = false;
+  var pbjtimeAudio = document.createElement('audio');
+  pbjtimeAudio.setAttribute('src', 'peanutbutterjellytime.mp3');
+
+  var rickRollAudio = document.createElement('audio');
+  rickRollAudio.setAttribute('src', 'nevergonnagiveyouup.mp3');
   $('.addDancerButton').on('click', function(event) {
     /* This function sets up the click handlers for the create-dancer
      * buttons on dancefloor.html. You should only need to make one small change to it.
@@ -37,8 +41,15 @@ $(document).ready(function() {
       dancer.$node.fadeIn('fast');
     });
 
-    // dancer.addEventListener("mouseout", );
-    $('body').append(dancer.$node);
+    $('.dancers').append(dancer.$node);
+
+    if(dancerMakerFunctionName === 'makeSpinningDancer') {
+      pbjtimeAudio.play();
+    }
+
+    if(dancerMakerFunctionName === 'makeBlinkyDancer') {
+      rickRollAudio.play();
+    }
 
   });
 
@@ -47,10 +58,11 @@ $(document).ready(function() {
     var action = $(this).data('action-name');
     if(action === 'lineUp') {
       for (var dancer of window.dancers) {
-        var yLoc = Math.floor(Math.random * window.dancers.length)*20;
-        dancer.lineUp(yLoc);
-        dancer.top = 500;
-        dancer.left = yLoc;
+        var top = 550;
+        var left = Math.floor(Math.random()*1500);
+        dancer.move(top, left);
+        dancer.top = top;
+        dancer.left = left;
       }
     }
     if(action === 'scatter') {
@@ -74,6 +86,11 @@ $(document).ready(function() {
         prevTop = newTop;
         prevLeft = newLeft;
       }
+    }
+
+    if(action === 'clear') {
+      window.dancers = [];
+      $('.dancers').empty();
     }
   });
 
