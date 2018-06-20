@@ -1,6 +1,7 @@
 $(document).ready(function() {
   window.dancers = [];
 
+  var linedUp = false;
   $('.addDancerButton').on('click', function(event) {
     /* This function sets up the click handlers for the create-dancer
      * buttons on dancefloor.html. You should only need to make one small change to it.
@@ -15,11 +16,6 @@ $(document).ready(function() {
      * to the stage.
      */
 
-    if($(this).data('dancer-maker-function-name') === "lineUp") {
-      $('body').each(function(value) {
-        value.setPosition(100, 100);
-      });
-    }
 
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
 
@@ -27,17 +23,58 @@ $(document).ready(function() {
     var dancerMakerFunction = window[dancerMakerFunctionName];
 
     // make a dancer with a random position
-    console.log(dancerMakerFunctionName);
-    if( dancerMakerFunctionName === 'makeBlinkyDancer'){
 
-    }
     var dancer = new dancerMakerFunction(
       Math.floor(Math.random() * 800),
       Math.floor(Math.random() * 1500),
       Math.random() * 1000
     );
+    window.dancers.push(dancer);
+    dancer.$node.mouseover(function() {
+      dancer.$node.fadeOut('fast');
+    });
+    dancer.$node.mouseout(function() {
+      dancer.$node.fadeIn('fast');
+    });
+
+    // dancer.addEventListener("mouseout", );
     $('body').append(dancer.$node);
 
+  });
+
+  $('.addActionButton').on('click', function(event) {
+
+    var action = $(this).data('action-name');
+    if(action === 'lineUp') {
+      for (var dancer of window.dancers) {
+        var yLoc = Math.floor(Math.random * window.dancers.length)*20;
+        dancer.lineUp(yLoc);
+        dancer.top = 500;
+        dancer.left = yLoc;
+      }
+    }
+    if(action === 'scatter') {
+      for (var dancer of window.dancers) {
+        var top = Math.floor(Math.random() * 800);
+        var left = Math.floor(Math.random() * 1500);
+        dancer.move(top, left);
+        dancer.top = top;
+        dancer.left = left;
+      }
+    }
+    if(action === 'follow') {
+      var prevTop = window.dancers[window.dancers.length-1].top;
+      var prevLeft = window.dancers[window.dancers.length-1].left;
+      for (var i = 0; i < window.dancers.length; i++) {
+        window.dancers[i].move(prevTop, prevLeft);
+        var newTop = window.dancers[i].top;
+        var newLeft = window.dancers[i].left;
+        window.dancers[i].top = prevTop;
+        window.dancers[i].left = prevLeft;
+        prevTop = newTop;
+        prevLeft = newLeft;
+      }
+    }
   });
 
 
