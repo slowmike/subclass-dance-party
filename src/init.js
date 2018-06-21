@@ -44,7 +44,7 @@ $(document).ready(function() {
     $('.dancers').append(dancer.$node);
 
     if(dancerMakerFunctionName === 'makeSpinningDancer') {
-      var sound = pbjtimeAudio,cloneNode();
+      var sound = pbjtimeAudio.cloneNode();
       sound.play();
     }
 
